@@ -1,3 +1,6 @@
 [submodule "Chronicle"]
 	path = Chronicle
 	url = https://github.com/QTIM-Lab/Chronicle
+[submodule "couchSite"]
+	path = couchSite
+	url = https://github.com/pieper/couchSite
