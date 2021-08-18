@@ -1,0 +1,35 @@
+
+
+# couchdb docker instance example
+user=
+pass=
+host_port=5984
+container_port=5984
+database_data_location=/raid/couchdb_databases/series_normalization
+
+sudo docker run \
+    -d \
+    --name couchdb_series_normalization \
+    -e COUCHDB_USER=$user \
+    -e COUCHDB_PASSWORD=$pass \
+    -p $host_port:$container_port \
+    -v $database_data_location:/opt/couchdb/data \
+    couchdb:latest
+
+
+
+# Python environments for loading data into couchdb 
+# sudo docker run --name=ben_workspace -v /home/ben.bearce/:/home_dir -v /home/jayashree.kalpathy:/home_dir/JK -it python bash # python3 version doesn't run well
+sudo docker run --name=ben_wks_python2 -p 5984:5984 -v /home/ben.bearce/:/home_dir -v /home/jayashree.kalpathy:/home_dir/JK -it python:2.7.18 bash
+
+# Make database in couchdb
+site_path=.
+db_name=series_norm1
+url=http://<user>:<password>@unique-foal.mrl.phy.ccds.io:5984
+cd Chronicle;
+../couchSite/couchSite.py $site_path $url $db_name
+
+# Load folder into database
+$ ./bin/record.py --databaseName <dbname> <path to DICOMS>
+./bin/record.py --dbName <dbname> <path to DICOMS>
+
